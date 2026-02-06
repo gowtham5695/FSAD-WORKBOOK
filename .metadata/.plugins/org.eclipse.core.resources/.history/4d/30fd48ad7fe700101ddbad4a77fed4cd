@@ -1,0 +1,34 @@
+package com.klu.skill2;
+public class App {
+
+    public static void main(String[] args) {
+
+        ProductDAO dao = new ProductDAO();
+
+        // INSERT
+        Product p1 = new Product("Laptop", "Dell i5", 60000, 10);
+        Product p2 = new Product("Keyboard", "Mechanical", 2500, 20);
+
+        dao.save(p1);
+        dao.save(p2);
+
+        // READ
+        Product p = dao.get(1);
+        System.out.println("Retrieved: " + p.getName());
+
+        // UPDATE
+        p.setPrice(58000);
+        dao.update(p1);
+
+        // DELETE
+        //dao.delete(2);
+    }
+}
+
+
+
+
+
+
+
+

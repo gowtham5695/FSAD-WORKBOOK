@@ -1,0 +1,50 @@
+package com.klu.skill2;
+
+import java.util.Scanner;
+
+public class App {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        ProductDAO dao = new ProductDAO();
+
+        System.out.print("How many products do you want to add? ");
+        int n = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        for (int i = 1; i <= n; i++) {
+
+            System.out.println("\nEnter details for Product " + i);
+
+            System.out.print("Name: ");
+            String name = sc.nextLine();
+
+            System.out.print("Description: ");
+            String description = sc.nextLine();
+
+            System.out.print("Price: ");
+            double price = sc.nextDouble();
+
+            System.out.print("Quantity: ");
+            int quantity = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            Product product = new Product(name, description, price, quantity);
+            dao.save(product);
+
+            System.out.println("Product saved successfully!");
+        }
+
+        sc.close();
+    }
+}
+
+
+
+
+
+
+
+
+

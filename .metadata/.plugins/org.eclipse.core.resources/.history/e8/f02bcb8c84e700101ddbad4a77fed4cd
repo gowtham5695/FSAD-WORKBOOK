@@ -1,0 +1,51 @@
+package com.klu.skill2;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+public class ProductDAO {
+
+    // CREATE
+    public void save(Product product) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.save(product);
+
+        tx.commit();
+        session.close();
+    }
+
+    // READ
+    public  void  get(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Product product = session.get(Product.class, id);
+        session.close();
+        //return product;
+    }
+
+    // UPDATE
+    public void update(Product product) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.update(product);
+
+        tx.commit();
+        session.close();
+    }
+
+    // DELETE
+    public void delete(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        Product product = session.get(Product.class, id);
+        if (product != null) {
+            session.delete(product);
+        }
+
+        tx.commit();
+        session.close();
+    }
+}
