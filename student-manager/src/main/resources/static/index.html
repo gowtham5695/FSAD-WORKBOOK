@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Manager</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background:#f4f4f4;
+        }
+        .container{
+            width:600px;
+            margin:auto;
+            margin-top:40px;
+            background:white;
+            padding:20px;
+            border-radius:8px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+        input{
+            padding:8px;
+            margin:5px;
+        }
+        button{
+            padding:8px 12px;
+            background:#007bff;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        table{
+            width:100%;
+            margin-top:20px;
+            border-collapse:collapse;
+        }
+        table,th,td{
+            border:1px solid #ddd;
+        }
+        th,td{
+            padding:10px;
+            text-align:center;
+        }
+        .delete{
+            background:red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const {useState} = React;
+
+function StudentManager(){
+
+    const [students,setStudents] = useState([
+        {id:1,name:"Karthik",course:"CSE"},
+        {id:2,name:"Rahul",course:"IT"},
+        {id:3,name:"Anjali",course:"ECE"},
+        {id:4,name:"Priya",course:"AI"},
+        {id:5,name:"Arjun",course:"DS"}
+    ])
+
+    const [newStudent,setNewStudent] = useState({
+        id:"",
+        name:"",
+        course:""
+    })
+
+    const handleChange = (e)=>{
+        setNewStudent({
+            ...newStudent,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    const addStudent = ()=>{
+        if(!newStudent.id || !newStudent.name || !newStudent.course) return;
+
+        setStudents([...students,newStudent])
+
+        setNewStudent({
+            id:"",
+            name:"",
+            course:""
+        })
+    }
+
+    const deleteStudent = (id)=>{
+        setStudents(students.filter(s=>s.id!=id))
+    }
+
+    return(
+        <div className="container">
+            <h2>Student Manager</h2>
+
+            <div>
+                <input name="id" placeholder="ID" value={newStudent.id} onChange={handleChange}/>
+                <input name="name" placeholder="Name" value={newStudent.name} onChange={handleChange}/>
+                <input name="course" placeholder="Course" value={newStudent.course} onChange={handleChange}/>
+
+                <button onClick={addStudent}>Add Student</button>
+            </div>
+
+            {students.length===0 ? (
+                <p>No students available</p>
+            ):(
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map(s=>(
+                            <tr key={s.id}>
+                                <td>{s.id}</td>
+                                <td>{s.name}</td>
+                                <td>{s.course}</td>
+                                <td>
+                                    <button className="delete" onClick={()=>deleteStudent(s.id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+
+        </div>
+    )
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<StudentManager/>);
+
+</script>
+
+</body>
+</html>
